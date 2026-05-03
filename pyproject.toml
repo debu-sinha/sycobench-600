@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sycobench"
+version = "0.1.0"
+description = "SycoBench-600 evaluation code, dataset, logs, and camera-ready reproducibility artifacts."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Debu Sinha", email = "debusinha2009@gmail.com" }]
+keywords = ["LLM evaluation", "sycophancy", "correction selectivity", "benchmark", "ACL"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "pydantic>=2.5",
+  "PyYAML>=6.0",
+  "requests>=2.31",
+  "tqdm>=4.66",
+  "pandas>=2.0",
+  "numpy>=1.24",
+  "matplotlib>=3.8",
+  "scipy>=1.11",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.6",
+]
+
+[project.urls]
+Homepage = "https://github.com/debu-sinha/sycobench-600"
+Repository = "https://github.com/debu-sinha/sycobench-600"
+Paper = "https://github.com/debu-sinha/sycobench-600/blob/main/paper/sycobench_camera_ready.pdf"
+
+[tool.setuptools]
+packages = ["sycobench"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]

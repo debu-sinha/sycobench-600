@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+      - name: Unit tests
+        run: pytest -q
+      - name: Paper artifact consistency
+        run: python scripts/validate_paper_full.py
+      - name: Rebuild smoke test
+        run: |
+          python scripts/validate_and_build.py \
+            --raw_dir results/raw_camera_ready \
+            --questions data/questions.json \
+            --out_dir /tmp/sycobench_build \
+            --use_intersection \
+            --n_boot 50
