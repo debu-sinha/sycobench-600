@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use SycoBench-600, please cite the paper."
+title: "SycoBench-600: Measuring Sycophancy and Correction Selectivity in LLM Assistants"
+authors:
+  - family-names: Sinha
+    given-names: Debu
+    email: debusinha2009@gmail.com
+year: 2026
+conference: "Findings of the Association for Computational Linguistics"
+version: 0.1.0
+license: MIT
+repository-code: "https://github.com/debu-sinha/sycobench-600"
