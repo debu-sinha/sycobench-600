@@ -1,0 +1,42 @@
+# Model configuration matching the released final logs.
+# Set the corresponding environment variables before running.
+# The original runs used these exact model IDs and providers.
+
+models:
+  - name: gpt-4o
+    provider: openai_compatible
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+
+  - name: gpt-4o-mini
+    provider: openai_compatible
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+
+  - name: anthropic/claude-sonnet-4
+    provider: openai_compatible
+    base_url: https://openrouter.ai/api/v1
+    api_key_env: OPENROUTER_API_KEY
+
+  - name: anthropic/claude-3.5-haiku
+    provider: openai_compatible
+    base_url: https://openrouter.ai/api/v1
+    api_key_env: OPENROUTER_API_KEY
+
+  - name: google/gemini-2.5-flash
+    provider: openai_compatible
+    base_url: https://openrouter.ai/api/v1
+    api_key_env: OPENROUTER_API_KEY
+
+  # Llama and Mistral were originally run on Together AI.
+  # Together retired both from serverless; use OpenRouter or
+  # a dedicated Together endpoint if rerunning.
+  - name: meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8
+    provider: openai_compatible
+    base_url: https://api.together.xyz/v1
+    api_key_env: TOGETHER_API_KEY
+
+  - name: mistralai/Mistral-7B-Instruct-v0.3
+    provider: openai_compatible
+    base_url: https://api.together.xyz/v1
+    api_key_env: TOGETHER_API_KEY
