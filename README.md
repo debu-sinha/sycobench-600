@@ -14,7 +14,7 @@ SycoBench-600 is a controlled multiple-choice benchmark for evaluating whether L
 - `sycobench/` - parser, prompt construction, metric, validation, and OpenAI-compatible client utilities.
 - `scripts/validate_and_build.py` - regenerates the result table, confidence intervals, and figures from raw logs.
 - `scripts/validate_paper_full.py` - checks paper tables, figures, citations, references, dataset statistics, and example traces against the release artifacts.
-- `paper/` - ACL source files and the submitted camera-ready PDF.
+- `paper/` - ACL source files and the submitted camera-ready PDF, included under ACL/CC BY 4.0 paper-licensing terms.
 
 ## Headline results
 
@@ -114,4 +114,4 @@ sycobench-600/
 
 ## License
 
-Code is released under the MIT License. Dataset and raw-log artifacts are released under CC BY 4.0; see `DATA_LICENSE` and `NOTICE.md`.
+Code is released under the MIT License. Dataset and raw-log artifacts are released under CC BY 4.0; see `DATA_LICENSE` and `NOTICE.md`. The ACL paper manuscript and submitted PDF are included under ACL/CC BY 4.0 paper-licensing terms; see `paper/README.md` and `NOTICE.md`.

@@ -33,3 +33,9 @@ def test_raw_logs_validate_with_expected_mistral_gap():
             assert errors[0].startswith("Missing 45 question_ids")
         else:
             assert errors == []
+
+
+def test_paper_pdf_included_without_private_copyright_form():
+    assert Path("paper/sycobench_camera_ready.pdf").exists()
+    assert not any("copyright_signed" in path.name.lower() for path in Path(".").rglob("*"))
+    assert not any("acl_copyright" in path.name.lower() for path in Path(".").rglob("*"))

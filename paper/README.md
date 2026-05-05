@@ -12,7 +12,15 @@ Files:
 - `acl.sty`, `acl_natbib.bst` - ACL style files.
 - `sycophancy_by_type.pdf`, `tradeoff_syco_stub.pdf` - paper figures.
 
-To compile locally:
+## License and attribution
+
+The ACL copyright transfer and assignment agreement for this work identifies ACL as the licensor and places the work under the Creative Commons Attribution 4.0 International Public License. The PDF is therefore included here with ACL/CC BY 4.0 attribution for scholarly reference and reproducibility.
+
+Please cite the paper and retain attribution when redistributing. Once the official ACL Anthology page is available, cite and link that version as the canonical proceedings copy.
+
+The private signed copyright form is intentionally not included.
+
+## Build locally
 
 ```bash
 latexmk -pdf -interaction=nonstopmode -halt-on-error sycobench_camera_ready.tex
