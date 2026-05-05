@@ -5,6 +5,8 @@
 **SycoBench-600: Measuring Sycophancy and Correction Selectivity in LLM Assistants**  
 ACL 2026 Findings camera-ready artifact.
 
+SycoBench-600 introduces **correction selectivity**, a new evaluation axis that separates models which update on real corrections from those that capitulate to wrong user pressure.
+
 SycoBench-600 is a controlled multiple-choice benchmark for evaluating whether LLM assistants can resist misleading user pressure while still accepting correct corrections. The benchmark includes 600 English MCQ instances across 8 domains and 3 difficulty tiers, evaluated under three misleading pressure styles and one matched correct-suggestion condition.
 
 ## What is released
