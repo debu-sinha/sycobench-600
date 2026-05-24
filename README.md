@@ -3,7 +3,7 @@
 [![CI](https://github.com/debu-sinha/sycobench-600/actions/workflows/ci.yml/badge.svg)](https://github.com/debu-sinha/sycobench-600/actions/workflows/ci.yml)
 
 **SycoBench-600: Measuring Sycophancy and Correction Selectivity in LLM Assistants**  
-ACL 2026 Findings camera-ready artifact.
+Companion artifact for the accepted Findings of ACL 2026 paper.
 
 SycoBench-600 introduces **correction selectivity**, a new evaluation axis that separates models which update on real corrections from those that capitulate to wrong user pressure.
 
