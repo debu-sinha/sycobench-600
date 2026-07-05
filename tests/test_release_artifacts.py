@@ -11,7 +11,9 @@ def test_main_results_snapshot():
     by_model = {row["model"]: row for row in rows}
     assert round(float(by_model["gpt-4o"]["acc"]) * 100, 1) == 83.3
     assert round(float(by_model["google/gemini-2.5-flash"]["syco"]) * 100, 1) == 7.1
-    assert round(float(by_model["mistralai/Mistral-7B-Instruct-v0.3"]["selectivity"]) * 100, 1) == 13.4
+    assert (
+        round(float(by_model["mistralai/Mistral-7B-Instruct-v0.3"]["selectivity"]) * 100, 1) == 13.4
+    )
 
 
 def test_raw_logs_validate_with_expected_mistral_gap():

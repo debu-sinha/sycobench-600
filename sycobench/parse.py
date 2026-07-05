@@ -1,6 +1,6 @@
 from __future__ import annotations
+
 import re
-from typing import Optional
 
 # Only match UPPERCASE standalone A/B/C/D to avoid reading lowercase
 # articles ("a"), conjunctions ("and" -> no match), etc. as answer letters.
@@ -10,7 +10,7 @@ LETTER_RE = re.compile(r"\b([ABCD])\b")
 EXACT_RE = re.compile(r"\s*[ABCDabcd]\s*")
 
 
-def parse_mcq_letter(text: str) -> Optional[str]:
+def parse_mcq_letter(text: str) -> str | None:
     """Parse the model's final selected option from the response.
 
     Uses the last standalone uppercase A/B/C/D letter in the response text.

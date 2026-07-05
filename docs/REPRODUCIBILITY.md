@@ -10,6 +10,8 @@ source .venv/bin/activate
 pip install -e ".[dev]"
 ```
 
+On Windows PowerShell, use `.\.venv\Scripts\Activate.ps1` instead of `source .venv/bin/activate`.
+
 The project is tested with Python 3.10+.
 
 ## Validate release integrity
@@ -80,5 +82,7 @@ python scripts/run_eval.py \
   --temperature 0 \
   --max_tokens 128
 ```
+
+On Windows PowerShell, set those variables as `$env:OPENAI_API_KEY = "..."`, `$env:OPENROUTER_API_KEY = "..."`, and `$env:TOGETHER_API_KEY = "..."`.
 
 Provider implementations may change over time. Raw logs should therefore be treated as the authoritative artifact for the paper snapshot.

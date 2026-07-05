@@ -1,20 +1,25 @@
 from __future__ import annotations
-from typing import Dict, List, Any, Tuple
-import hashlib, json
+
+import hashlib
+from typing import Any
 
 PRESSURE_TYPES = ["doubt", "authority", "wrong_suggest"]
 ALL_TYPES = ["doubt", "authority", "wrong_suggest", "correct_suggest"]
 
+
 def sha256_text(s: str) -> str:
     return hashlib.sha256(s.encode("utf-8")).hexdigest()
 
-def validate_model_log(model_data: Dict[str, Any], question_ids: List[str]) -> List[str]:
+
+def validate_model_log(model_data: dict[str, Any], question_ids: list[str]) -> list[str]:
     errors = []
     # Check coverage
-    seen = set((it["question_id"] for it in model_data["items"]))
+    seen = set(it["question_id"] for it in model_data["items"])
     missing = [q for q in question_ids if q not in seen]
     if missing:
-        errors.append(f"Missing {len(missing)} question_ids: {missing[:10]}{'...' if len(missing)>10 else ''}")
+        errors.append(
+            f"Missing {len(missing)} question_ids: {missing[:10]}{'...' if len(missing) > 10 else ''}"
+        )
 
     # Check each item schema
     for it in model_data["items"]:
@@ -37,19 +42,30 @@ def validate_model_log(model_data: Dict[str, Any], question_ids: List[str]) -> L
                 # at runtime) but the new parser says baseline is wrong.
                 if it["baseline"]["correct"] and not rec.get("skipped", False):
                     errors.append(f"{qid}: correct_suggest should be skipped when baseline correct")
-                if (not it["baseline"]["correct"]) and rec.get("skipped", False) and not rec.get("_missing_data", False):
+                if (
+                    (not it["baseline"]["correct"])
+                    and rec.get("skipped", False)
+                    and not rec.get("_missing_data", False)
+                ):
                     errors.append(f"{qid}: correct_suggest is skipped but baseline is wrong")
         # wrong_suggest should not suggest correct letter
         ws = perts.get("wrong_suggest", {})
         if "suggested_letter" in ws and ws["suggested_letter"] == it["correct"]:
             errors.append(f"{qid}: wrong_suggest suggested correct letter {it['correct']}")
         cs = perts.get("correct_suggest", {})
-        if (not it["baseline"]["correct"]) and ("suggested_letter" in cs) and cs["suggested_letter"] != it["correct"]:
-            errors.append(f"{qid}: correct_suggest suggested {cs.get('suggested_letter')} but correct is {it['correct']}")
+        if (
+            (not it["baseline"]["correct"])
+            and ("suggested_letter" in cs)
+            and cs["suggested_letter"] != it["correct"]
+        ):
+            errors.append(
+                f"{qid}: correct_suggest suggested {cs.get('suggested_letter')} but correct is {it['correct']}"
+            )
 
     return errors
 
-def validate_prompt_identity(all_models: Dict[str, Dict[str, Any]]) -> List[str]:
+
+def validate_prompt_identity(all_models: dict[str, dict[str, Any]]) -> list[str]:
     """
     For each (question_id, variant_id, perturbation_type), the *user perturbation message* should be identical across models.
     Baseline assistant answer will differ; that's OK.
@@ -57,7 +73,7 @@ def validate_prompt_identity(all_models: Dict[str, Dict[str, Any]]) -> List[str]
     errors = []
     # build map: key -> set(prompt_text)
     mp = {}
-    for model_name, md in all_models.items():
+    for _model_name, md in all_models.items():
         for it in md["items"]:
             qid = it["question_id"]
             vid = it["variant_id"]
@@ -72,5 +88,7 @@ def validate_prompt_identity(all_models: Dict[str, Dict[str, Any]]) -> List[str]
     for key, s in mp.items():
         if len(s) > 1:
             qid, vid, ptype = key
-            errors.append(f"Prompt mismatch for (qid={qid}, variant={vid}, type={ptype}): {len(s)} distinct prompts")
+            errors.append(
+                f"Prompt mismatch for (qid={qid}, variant={vid}, type={ptype}): {len(s)} distinct prompts"
+            )
     return errors

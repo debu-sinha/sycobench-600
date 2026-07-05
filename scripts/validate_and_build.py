@@ -6,30 +6,32 @@ Run from repo root:
 """
 
 from __future__ import annotations
+
+import argparse
+import json
+import os
 import sys
 from pathlib import Path
+from typing import Any
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 # Ensure `import sycobench` works when running as a script.
 REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
-import argparse
-import os
-import json
-from typing import Dict, Any, List
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 
-from sycobench.io import load_json, save_json
-from sycobench.validate import validate_model_log, validate_prompt_identity
-from sycobench.metrics import compute_metrics, bootstrap_paper_ci_question_cluster
+from sycobench.io import load_json, save_json  # noqa: E402
+from sycobench.metrics import bootstrap_paper_ci_question_cluster, compute_metrics  # noqa: E402
+from sycobench.validate import validate_model_log, validate_prompt_identity  # noqa: E402
 
 PRESSURE_TYPES = ["doubt", "authority", "wrong_suggest"]
 
 
-def load_questions(path: str) -> List[Dict[str, Any]]:
-    with open(path, "r", encoding="utf-8") as f:
+def load_questions(path: str) -> list[dict[str, Any]]:
+    with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -39,7 +41,9 @@ def main():
     ap.add_argument("--questions", required=True)
     ap.add_argument("--out_dir", required=True)
     ap.add_argument("--strict", action="store_true")
-    ap.add_argument("--n_boot", type=int, default=2000, help="bootstrap replicates for confidence intervals")
+    ap.add_argument(
+        "--n_boot", type=int, default=2000, help="bootstrap replicates for confidence intervals"
+    )
     ap.add_argument(
         "--use_intersection",
         action="store_true",
@@ -53,8 +57,8 @@ def main():
     qids = [q["id"] for q in questions]
 
     # Load model logs (supports nested subdirectories)
-    all_models: Dict[str, Dict[str, Any]] = {}
-    for root, dirs, files in os.walk(args.raw_dir):
+    all_models: dict[str, dict[str, Any]] = {}
+    for root, _dirs, files in os.walk(args.raw_dir):
         for f in files:
             if not f.endswith(".json"):
                 continue
@@ -87,7 +91,7 @@ def main():
     # Determine question intersection if requested
     if args.use_intersection:
         sets = []
-        for m, md in all_models.items():
+        for _m, md in all_models.items():
             sets.append(set(it["question_id"] for it in md["items"]))
         inter = set.intersection(*sets) if sets else set()
     else:
@@ -104,13 +108,13 @@ def main():
 
         # Bootstrap CIs for key metrics. Seeds match the camera-ready artifact.
         ci_syco = bootstrap_paper_ci_question_cluster(md2, n_boot=args.n_boot, seed=0)["syco"]
-        ci_stub = bootstrap_paper_ci_question_cluster(md2, n_boot=args.n_boot, seed=1)["stub_no_change"]
+        ci_stub = bootstrap_paper_ci_question_cluster(md2, n_boot=args.n_boot, seed=1)[
+            "stub_no_change"
+        ]
         ci_pra = bootstrap_paper_ci_question_cluster(md2, n_boot=args.n_boot, seed=2)["pra_all"]
 
         # Exact-one-letter compliance rate (formatting metric)
-        exact_count = sum(
-            1 for it in md2["items"] if it["baseline"].get("exact_one_letter", False)
-        )
+        exact_count = sum(1 for it in md2["items"] if it["baseline"].get("exact_one_letter", False))
         exact_rate = exact_count / len(md2["items"]) if md2["items"] else float("nan")
 
         # Effective correction denominator (nW minus _missing_data)
@@ -118,9 +122,7 @@ def main():
             1
             for it in md2["items"]
             if not it["baseline"]["correct"]
-            and it["perturbations"]
-            .get("correct_suggest", {})
-            .get("_missing_data", False)
+            and it["perturbations"].get("correct_suggest", {}).get("_missing_data", False)
         )
         nW_eff = met["nW"] - nW_missing
 
@@ -170,9 +172,7 @@ def main():
         syco = f"{pct(r.syco)} [{pct(r.syco_ci_lo)}--{pct(r.syco_ci_hi)}]"
         stub = f"{pct(r.stub_no_change)} [{pct(r.stub_ci_lo)}--{pct(r.stub_ci_hi)}]"
         sel = f"{100 * r.selectivity:.1f}" if pd.notnull(r.selectivity) else "NA"
-        lines.append(
-            f"{r.model} & {pct(r.acc)} & {pct(r.pra_all)} & {syco} & {stub} & {sel} \\\\"
-        )
+        lines.append(f"{r.model} & {pct(r.acc)} & {pct(r.pra_all)} & {syco} & {stub} & {sel} \\\\")
     lines.append(r"\bottomrule")
     lines.append(r"\end{tabular}")
     open(os.path.join(tables_dir, "main_results.tex"), "w", encoding="utf-8").write(

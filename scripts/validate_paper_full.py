@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """Full paper validation: every table, figure, reference, citation, and trace."""
 
-import re
-import json
 import csv
-import sys
+import json
 import os
+import re
+import sys
+from collections import Counter
 
 sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from sycobench.metrics import compute_metrics  # noqa: E402
 
 tex = open("paper/sycobench_camera_ready.tex", encoding="utf-8").read()
 bib = open("paper/references.bib", encoding="utf-8").read()
@@ -72,18 +75,14 @@ for r in rows:
         ]:
             if v not in tex:
                 errors.append(f"Table 3 {model_short}: {name}={v} NOT in paper")
-    print(
-        f"   {model_short}: Acc={acc} PRA={pra} Syco={syco} Stub={stub} Sel={sel} [{status}]"
-    )
+    print(f"   {model_short}: Acc={acc} PRA={pra} Syco={syco} Stub={stub} Sel={sel} [{status}]")
 
 # 4. Table 4 vs computed metrics
 print("4. Table 4 vs computed metrics:")
-from sycobench.metrics import compute_metrics
-
 raw_dir = "results/raw_camera_ready"
 all_models = {}
 all_sets = []
-for root, dirs, files in os.walk(raw_dir):
+for root, _dirs, files in os.walk(raw_dir):
     for f in sorted(files):
         if not f.endswith(".json"):
             continue
@@ -152,9 +151,7 @@ for qid, vid, exp_base, exp_perts in traces:
             for pt, exp in exp_perts.items():
                 p = it["perturbations"][pt]
                 if not p.get("skipped") and p["parsed"] != exp:
-                    errors.append(
-                        f"Trace {qid} {pt}: parsed={p['parsed']} expected={exp}"
-                    )
+                    errors.append(f"Trace {qid} {pt}: parsed={p['parsed']} expected={exp}")
             print(f"   {qid} v{vid}: OK")
             break
 
@@ -162,8 +159,6 @@ for qid, vid, exp_base, exp_perts in traces:
 print("7. Dataset stats:")
 questions = json.load(open("data/questions.json", encoding="utf-8"))
 print(f"   Total: {len(questions)} (paper says 600: {'600' in tex})")
-from collections import Counter
-
 stems = len(set(q["question"].strip().lower() for q in questions))
 print(f"   Stems: {stems} (paper says 272: {'272' in tex})")
 diffs = Counter(q["difficulty"] for q in questions)

@@ -68,7 +68,7 @@ def stable_seed(base_seed: int, *parts: object, modulo: int = 100_000) -> int:
 
 
 def load_questions(path: str) -> list[dict[str, Any]]:
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         data = json.load(f)
 
     import re
@@ -128,14 +128,19 @@ def parse_or_retry(
     seed: int,
     extra_body: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    resp = call_with_retry(client, model, messages, temperature, max_tokens, seed, extra_body=extra_body)
+    resp = call_with_retry(
+        client, model, messages, temperature, max_tokens, seed, extra_body=extra_body
+    )
     text = extract_text(resp)
     parsed = parse_mcq_letter(text)
     if parsed is not None:
         return {"resp": resp, "text": text, "parsed": parsed, "retry": False}
 
     retry_messages = messages + [
-        {"role": "user", "content": "Format reminder: Reply with exactly one letter: A, B, C, or D."}
+        {
+            "role": "user",
+            "content": "Format reminder: Reply with exactly one letter: A, B, C, or D.",
+        }
     ]
     resp2 = call_with_retry(
         client,
@@ -350,7 +355,7 @@ def main() -> None:
 
     questions_sha256 = sha256_file(args.questions)
     questions = load_questions(args.questions)
-    with open(args.config, "r", encoding="utf-8") as f:
+    with open(args.config, encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
 
     for model_cfg in cfg["models"]:

@@ -57,6 +57,12 @@ python scripts/validate_and_build.py \
   --n_boot 2000
 ```
 
+On Windows PowerShell, activate the environment with:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
 For a faster smoke rebuild, use `--n_boot 50`. The published table was generated with `--n_boot 2000`.
 
 ## Running new model evaluations
@@ -78,6 +84,14 @@ python scripts/run_eval.py \
   --max_tokens 128
 ```
 
+Windows PowerShell equivalents:
+
+```powershell
+$env:OPENAI_API_KEY = "..."
+$env:OPENROUTER_API_KEY = "..."
+$env:TOGETHER_API_KEY = "..."
+```
+
 The runner records raw responses, parsed choices, correctness flags, prompt variants, usage metadata when available, and provider response metadata. API keys are read only from environment variables and are not written to logs.
 
 ## Reproducibility notes
@@ -93,14 +107,14 @@ See `docs/REPRODUCIBILITY.md`, `docs/DATA_CARD.md`, and `docs/METRICS.md` for de
 
 ```text
 sycobench-600/
-├── data/                       # final benchmark dataset
-├── results/raw_camera_ready/    # raw logs for the paper results
-├── sycobench/                  # reusable package code
-├── scripts/                    # evaluation, validation, and artifact build scripts
-├── build/camera_ready/          # generated CSV/table/figure artifacts
-├── paper/                      # ACL source and submitted PDF
-├── tests/                      # reproducibility and unit tests
-└── docs/                       # data card, metrics, and reproducibility docs
+|-- data/                       # final benchmark dataset
+|-- results/raw_camera_ready/    # raw logs for the paper results
+|-- sycobench/                  # reusable package code
+|-- scripts/                    # evaluation, validation, and artifact build scripts
+|-- build/camera_ready/          # generated CSV/table/figure artifacts
+|-- paper/                      # ACL source and submitted PDF
+|-- tests/                      # reproducibility and unit tests
+`-- docs/                       # data card, metrics, and reproducibility docs
 ```
 
 ## Citation

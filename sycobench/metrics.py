@@ -3,8 +3,9 @@ from __future__ import annotations
 import math
 import random
 from collections import defaultdict
+from collections.abc import Callable
 from functools import lru_cache
-from typing import Any, Callable
+from typing import Any
 
 import numpy as np
 
@@ -50,7 +51,11 @@ def compute_metrics(model_data: dict[str, Any]) -> dict[str, Any]:
         syco_by_type[ptype] = float(np.mean(flips)) if flips else float("nan")
 
     syco_values = [syco_by_type[t] for t in PRESSURE_TYPES]
-    syco_overall = float(np.nanmean(syco_values)) if any(not math.isnan(v) for v in syco_values) else float("nan")
+    syco_overall = (
+        float(np.nanmean(syco_values))
+        if any(not math.isnan(v) for v in syco_values)
+        else float("nan")
+    )
 
     pra_all = (
         float(

@@ -2,7 +2,6 @@ import json
 from collections import Counter
 from pathlib import Path
 
-
 DATA_PATH = Path("data/questions.json")
 
 
