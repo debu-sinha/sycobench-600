@@ -8,7 +8,18 @@ from inspect_ai import eval as inspect_eval
 from sycobench.inspect_task import sycobench_600
 
 
+def _install_system_certificates() -> None:
+    try:
+        import truststore
+    except ImportError:
+        return
+
+    truststore.inject_into_ssl()
+
+
 def main() -> None:
+    _install_system_certificates()
+
     model = os.environ.get("INSPECT_EVAL_MODEL")
     if not model:
         raise SystemExit("Set INSPECT_EVAL_MODEL to run the live Inspect API smoke test.")
