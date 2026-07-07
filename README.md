@@ -92,6 +92,19 @@ For a deterministic local smoke run without API calls:
 pytest tests/test_inspect_task.py -q
 ```
 
+## lm-evaluation-harness adapter
+
+A baseline multiple-choice adapter is available for [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness). It uses the published Hugging Face dataset and evaluates the single-turn MCQ baseline; use the Inspect adapter above for the full multi-turn SycoBench protocol.
+
+```bash
+lm_eval \
+  --include_path integrations/lm_eval \
+  --tasks sycobench_600_baseline \
+  --model hf \
+  --model_args pretrained=EleutherAI/pythia-70m \
+  --limit 10
+```
+
 ## Running new model evaluations
 
 The evaluation runner supports OpenAI-compatible Chat Completions APIs, including OpenAI, OpenRouter, Together-compatible endpoints, and local vLLM-style deployments.
