@@ -4,7 +4,7 @@ Add the lm-evaluation-harness adapter after the Hugging Face dataset is public a
 
 Planned task shape:
 
-- Dataset path: `debu-sinha/sycobench-600`
+- Dataset path: `dsinha/sycobench-600`
 - Split: `test`
 - Task type: multiple choice baseline evaluation, with SycoBench-specific follow-up protocol documented separately.
 - Prompt: question plus A/B/C/D choices and exact-one-letter instruction.

@@ -3,6 +3,7 @@
 [![CI](https://github.com/debu-sinha/sycobench-600/actions/workflows/ci.yml/badge.svg)](https://github.com/debu-sinha/sycobench-600/actions/workflows/ci.yml)
 [![ACL Anthology](https://img.shields.io/badge/ACL%20Anthology-2026.findings--acl.1759-blue)](https://aclanthology.org/2026.findings-acl.1759/)
 [![DOI](https://img.shields.io/badge/DOI-10.18653%2Fv1%2F2026.findings--acl.1759-blue)](https://doi.org/10.18653/v1/2026.findings-acl.1759)
+[![Hugging Face Dataset](https://img.shields.io/badge/Hugging%20Face-dataset-yellow)](https://huggingface.co/datasets/dsinha/sycobench-600)
 [![Release](https://img.shields.io/github/v/release/debu-sinha/sycobench-600?include_prereleases)](https://github.com/debu-sinha/sycobench-600/releases)
 
 **SycoBench-600: Measuring Sycophancy and Correction Selectivity in LLM Assistants**
@@ -12,6 +13,7 @@ Companion artifact for the Findings of ACL 2026 paper.
 Paper: https://aclanthology.org/2026.findings-acl.1759/
 PDF: https://aclanthology.org/2026.findings-acl.1759.pdf
 DOI: https://doi.org/10.18653/v1/2026.findings-acl.1759
+Dataset: https://huggingface.co/datasets/dsinha/sycobench-600
 
 SycoBench-600 introduces **correction selectivity**, a new evaluation axis that separates models which update on real corrections from those that capitulate to wrong user pressure.
 

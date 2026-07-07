@@ -42,6 +42,7 @@ Homepage = "https://github.com/debu-sinha/sycobench-600"
 Repository = "https://github.com/debu-sinha/sycobench-600"
 Paper = "https://aclanthology.org/2026.findings-acl.1759/"
 DOI = "https://doi.org/10.18653/v1/2026.findings-acl.1759"
+Dataset = "https://huggingface.co/datasets/dsinha/sycobench-600"
 
 [tool.setuptools]
 packages = ["sycobench"]

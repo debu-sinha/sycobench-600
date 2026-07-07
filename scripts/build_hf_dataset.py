@@ -67,7 +67,7 @@ SycoBench-600 is English-only and multiple-choice. It does not capture open-ende
 ```python
 from datasets import load_dataset
 
-dataset = load_dataset("debu-sinha/sycobench-600", split="test")
+dataset = load_dataset("dsinha/sycobench-600", split="test")
 print(dataset[0])
 ```
 
@@ -117,7 +117,10 @@ def build_hf_dataset(questions_path: Path, out_dir: Path) -> None:
     data_dir = out_dir / "data"
     data_dir.mkdir(exist_ok=True)
 
-    jsonl_path = data_dir / "sycobench_600.jsonl"
+    for stale_path in data_dir.glob("*.jsonl"):
+        stale_path.unlink()
+
+    jsonl_path = data_dir / "test.jsonl"
     with jsonl_path.open("w", encoding="utf-8", newline="\n") as f:
         for question in questions:
             f.write(json.dumps(normalize_question(question), ensure_ascii=False) + "\n")
