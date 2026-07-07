@@ -20,6 +20,7 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
+  "inspect-ai>=0.3.189",
   "pydantic>=2.5",
   "PyYAML>=6.0",
   "requests>=2.31",
@@ -39,7 +40,8 @@ dev = [
 [project.urls]
 Homepage = "https://github.com/debu-sinha/sycobench-600"
 Repository = "https://github.com/debu-sinha/sycobench-600"
-Paper = "https://github.com/debu-sinha/sycobench-600/blob/main/paper/sycobench_camera_ready.pdf"
+Paper = "https://aclanthology.org/2026.findings-acl.1759/"
+DOI = "https://doi.org/10.18653/v1/2026.findings-acl.1759"
 
 [tool.setuptools]
 packages = ["sycobench"]

@@ -1,9 +1,17 @@
 # SycoBench-600
 
 [![CI](https://github.com/debu-sinha/sycobench-600/actions/workflows/ci.yml/badge.svg)](https://github.com/debu-sinha/sycobench-600/actions/workflows/ci.yml)
+[![ACL Anthology](https://img.shields.io/badge/ACL%20Anthology-2026.findings--acl.1759-blue)](https://aclanthology.org/2026.findings-acl.1759/)
+[![DOI](https://img.shields.io/badge/DOI-10.18653%2Fv1%2F2026.findings--acl.1759-blue)](https://doi.org/10.18653/v1/2026.findings-acl.1759)
+[![Release](https://img.shields.io/github/v/release/debu-sinha/sycobench-600?include_prereleases)](https://github.com/debu-sinha/sycobench-600/releases)
 
-**SycoBench-600: Measuring Sycophancy and Correction Selectivity in LLM Assistants**  
-Companion artifact for the accepted Findings of ACL 2026 paper.
+**SycoBench-600: Measuring Sycophancy and Correction Selectivity in LLM Assistants**
+
+Companion artifact for the Findings of ACL 2026 paper.
+
+Paper: https://aclanthology.org/2026.findings-acl.1759/
+PDF: https://aclanthology.org/2026.findings-acl.1759.pdf
+DOI: https://doi.org/10.18653/v1/2026.findings-acl.1759
 
 SycoBench-600 introduces **correction selectivity**, a new evaluation axis that separates models which update on real corrections from those that capitulate to wrong user pressure.
 
@@ -16,6 +24,7 @@ SycoBench-600 is a controlled multiple-choice benchmark for evaluating whether L
 - `sycobench/` - parser, prompt construction, metric, validation, and OpenAI-compatible client utilities.
 - `scripts/validate_and_build.py` - regenerates the result table, confidence intervals, and figures from raw logs.
 - `scripts/validate_paper_full.py` - checks paper tables, figures, citations, references, dataset statistics, and example traces against the release artifacts.
+- `sycobench/inspect_task.py` - Inspect AI task adapter for running the SycoBench protocol through `inspect eval`.
 - `paper/` - ACL source files and the submitted camera-ready PDF, included under ACL/CC BY 4.0 paper-licensing terms.
 
 ## Headline results
@@ -64,6 +73,22 @@ On Windows PowerShell, activate the environment with:
 ```
 
 For a faster smoke rebuild, use `--n_boot 50`. The published table was generated with `--n_boot 2000`.
+
+## Inspect AI adapter
+
+SycoBench-600 includes an [Inspect AI](https://inspect.aisi.org.uk/) task that runs the paper protocol: a baseline MCQ answer followed by three misleading pressure turns and, when the baseline is wrong, one matched correct-suggestion turn.
+
+```bash
+inspect eval sycobench/inspect_task.py@sycobench_600 \
+  --model openai/gpt-4o-mini \
+  -T limit=10
+```
+
+For a deterministic local smoke run without API calls:
+
+```bash
+pytest tests/test_inspect_task.py -q
+```
 
 ## Running new model evaluations
 
@@ -123,8 +148,11 @@ sycobench-600/
 @inproceedings{sinha2026sycobench,
   title = {{SycoBench-600}: Measuring Sycophancy and Correction Selectivity in {LLM} Assistants},
   author = {Sinha, Debu},
-  booktitle = {Findings of the Association for Computational Linguistics},
-  year = {2026}
+  booktitle = {Findings of the Association for Computational Linguistics: ACL 2026},
+  year = {2026},
+  pages = {35278--35284},
+  doi = {10.18653/v1/2026.findings-acl.1759},
+  url = {https://aclanthology.org/2026.findings-acl.1759/}
 }
 ```
 

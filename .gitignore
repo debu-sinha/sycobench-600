@@ -37,3 +37,7 @@ paper/*.toc
 
 # Keep camera-ready generated artifacts under build/camera_ready tracked.
 build/tmp/
+# Local smoke/export outputs
+build/camera_ready_smoke/
+build/inspect_cli_smoke/
+build/huggingface_dataset/

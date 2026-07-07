@@ -9,4 +9,7 @@ year: 2026
 conference: "Findings of the Association for Computational Linguistics"
 version: 0.1.0
 license: MIT
+doi: 10.18653/v1/2026.findings-acl.1759
+url: "https://aclanthology.org/2026.findings-acl.1759/"
 repository-code: "https://github.com/debu-sinha/sycobench-600"
+date-released: 2026-07-01
