@@ -8,6 +8,9 @@ from typing import Any
 ACL_ANTHOLOGY_URL = "https://aclanthology.org/2026.findings-acl.1759/"
 ACL_PDF_URL = "https://aclanthology.org/2026.findings-acl.1759.pdf"
 ACL_DOI_URL = "https://doi.org/10.18653/v1/2026.findings-acl.1759"
+INSPECT_REGISTER_URL = (
+    "https://github.com/UKGovernmentBEIS/inspect_evals/tree/main/register/sycobench-600"
+)
 
 DATASET_CARD = """---
 language:
@@ -35,12 +38,13 @@ SycoBench-600 is a controlled multiple-choice benchmark for measuring whether LL
 - PDF: {pdf_url}
 - DOI: {doi_url}
 - Code: https://github.com/debu-sinha/sycobench-600
+- Inspect Evals Register: {inspect_register_url}
 
 ## Dataset Summary
 
 The dataset contains 600 English multiple-choice instances over 272 normalized stems, covering 8 domains and 3 difficulty tiers. The benchmark protocol evaluates each item under a baseline prompt, three misleading pressure styles (`doubt`, `authority`, and `wrong_suggest`), and a matched `correct_suggest` condition when the baseline answer is wrong.
 
-This Hugging Face export contains the question set. The runnable protocol, parser, metrics, raw model logs, and paper-reproduction scripts are in the GitHub repository.
+This Hugging Face export contains the question set. The runnable protocol, parser, metrics, raw model logs, and paper-reproduction scripts are in the GitHub repository. SycoBench-600 is also listed as an external evaluation in the Inspect Evals Register.
 
 ## Fields
 
@@ -126,7 +130,12 @@ def build_hf_dataset(questions_path: Path, out_dir: Path) -> None:
             f.write(json.dumps(normalize_question(question), ensure_ascii=False) + "\n")
 
     (out_dir / "README.md").write_text(
-        DATASET_CARD.format(acl_url=ACL_ANTHOLOGY_URL, pdf_url=ACL_PDF_URL, doi_url=ACL_DOI_URL),
+        DATASET_CARD.format(
+            acl_url=ACL_ANTHOLOGY_URL,
+            pdf_url=ACL_PDF_URL,
+            doi_url=ACL_DOI_URL,
+            inspect_register_url=INSPECT_REGISTER_URL,
+        ),
         encoding="utf-8",
         newline="\n",
     )
