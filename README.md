@@ -4,6 +4,7 @@
 [![ACL Anthology](https://img.shields.io/badge/ACL%20Anthology-2026.findings--acl.1759-blue)](https://aclanthology.org/2026.findings-acl.1759/)
 [![DOI](https://img.shields.io/badge/DOI-10.18653%2Fv1%2F2026.findings--acl.1759-blue)](https://doi.org/10.18653/v1/2026.findings-acl.1759)
 [![Hugging Face Dataset](https://img.shields.io/badge/Hugging%20Face-dataset-yellow)](https://huggingface.co/datasets/dsinha/sycobench-600)
+[![Inspect Evals Register](https://img.shields.io/badge/Inspect%20Evals-register-orange)](https://github.com/UKGovernmentBEIS/inspect_evals/tree/main/register/sycobench-600)
 [![Release](https://img.shields.io/github/v/release/debu-sinha/sycobench-600?include_prereleases)](https://github.com/debu-sinha/sycobench-600/releases)
 
 **SycoBench-600: Measuring Sycophancy and Correction Selectivity in LLM Assistants**
@@ -14,6 +15,7 @@ Paper: https://aclanthology.org/2026.findings-acl.1759/
 PDF: https://aclanthology.org/2026.findings-acl.1759.pdf
 DOI: https://doi.org/10.18653/v1/2026.findings-acl.1759
 Dataset: https://huggingface.co/datasets/dsinha/sycobench-600
+Inspect Evals Register: https://github.com/UKGovernmentBEIS/inspect_evals/tree/main/register/sycobench-600
 
 SycoBench-600 introduces **correction selectivity**, a new evaluation axis that separates models which update on real corrections from those that capitulate to wrong user pressure.
 
@@ -79,6 +81,8 @@ For a faster smoke rebuild, use `--n_boot 50`. The published table was generated
 ## Inspect AI adapter
 
 SycoBench-600 includes an [Inspect AI](https://inspect.aisi.org.uk/) task that runs the paper protocol: a baseline MCQ answer followed by three misleading pressure turns and, when the baseline is wrong, one matched correct-suggestion turn.
+
+SycoBench-600 is listed as an external evaluation in the [Inspect Evals Register](https://github.com/UKGovernmentBEIS/inspect_evals/tree/main/register/sycobench-600), merged in [UKGovernmentBEIS/inspect_evals#1901](https://github.com/UKGovernmentBEIS/inspect_evals/pull/1901).
 
 ```bash
 inspect eval sycobench/inspect_task.py@sycobench_600 \
